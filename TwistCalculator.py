@@ -67,11 +67,9 @@ def averageSideData(datalist, sample):
 
 	greenRawSides = []
 
-	sampleCount = 0
-
+	# Go through each row and pull out the user specified samples. Stick the vectors for the wanted samples into a raw data array. 
 	for row in datalist: 
 		column = row.split(',')
-		# print(column[1].strip()[1])
 
 		if str(sample) in column[1].strip()[:-1]: # Looking for the sample number in the first digits of the run number column (ignoring the last digit)
 			side1 = [float(column[2].strip()), float(column[3].strip()), float(column[4].strip())]
@@ -80,24 +78,23 @@ def averageSideData(datalist, sample):
 			side4 = [float(column[11].strip()), float(column[12].strip()), float(column[13].strip())]
 
 			greenRawSides.append([side1, side2, side3, side4])
-			sampleCount = sampleCount + 1 # Count how many runs each sample has
-			
 
 
+	# Initalize side arrays with floats
 	side1Sum = [0.0, 0.0, 0.0]
 	side2Sum = [0.0, 0.0, 0.0]
 	side3Sum = [0.0, 0.0, 0.0]
 	side4Sum = [0.0, 0.0, 0.0]
-	# for i in greenDataArray: 
 
 	avgData = []
-	greenRunsNum = len(greenRawSides) # Number of runs done per sample
+	greenRunsNum = len(greenRawSides) # Number of runs done per sample. Will usually be 3
+	#TODO: Test if samples have more/less than 3 runs. I'm pretty sure it'll work but who knows...
 
 	for i in range(greenRunsNum): 
 		side1Sum = [x + y for x, y in zip(side1Sum, greenRawSides[i][0])]
-		side2Sum = [x + y for x, y in zip(side1Sum, greenRawSides[i][1])]
-		side3Sum = [x + y for x, y in zip(side1Sum, greenRawSides[i][2])]
-		side4Sum = [x + y for x, y in zip(side1Sum, greenRawSides[i][3])]
+		side2Sum = [x + y for x, y in zip(side2Sum, greenRawSides[i][1])]
+		side3Sum = [x + y for x, y in zip(side3Sum, greenRawSides[i][2])]
+		side4Sum = [x + y for x, y in zip(side4Sum, greenRawSides[i][3])]
 
 
 	side1Avg = [x / greenRunsNum for x in side1Sum] 
