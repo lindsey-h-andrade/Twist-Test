@@ -72,7 +72,8 @@ def averageSideData(datalist, sample):
 	for row in datalist: 
 		column = row.split(',')
 		# print(column[1].strip()[1])
-		if str(sample) in column[1].strip()[0]: # Looking for the sample number in the first digit of the run number column
+
+		if str(sample) in column[1].strip()[:-1]: # Looking for the sample number in the first digits of the run number column (ignoring the last digit)
 			side1 = [float(column[2].strip()), float(column[3].strip()), float(column[4].strip())]
 			side2 = [float(column[5].strip()), float(column[6].strip()), float(column[7].strip())]
 			side3 = [float(column[8].strip()), float(column[9].strip()), float(column[10].strip())]
@@ -80,6 +81,8 @@ def averageSideData(datalist, sample):
 
 			greenRawSides.append([side1, side2, side3, side4])
 			sampleCount = sampleCount + 1 # Count how many runs each sample has
+			
+
 
 	side1Sum = [0.0, 0.0, 0.0]
 	side2Sum = [0.0, 0.0, 0.0]
