@@ -20,12 +20,17 @@ def getSampleNumber():
 # 		for item in columns
 
 
-def main(): 
+def main(greenFileLoc = None, sinterFileLoc = None): 
+	print('-----')
+
+	if greenFileLoc == None and sinterFileLoc == None: 
+		# Ask for green results file location
+		greenFileLoc = input("Enter (or drag and drop) file location of green data: ")
+		sinterFileLoc = input("Enter (or drag and drop) file location of sintered data: ")
+	
+	print('\n')
 	SampleNum = getSampleNumber() # This returns an INT
 
-	# Ask for green results file location
-	greenFileLoc = input("Enter (or drag and drop) file location of green data: ")
-	sinterFileLoc = input("Enter (or drag and drop) file location of sintered data: ")
 
 	greenData = open(greenFileLoc.strip('"'), 'r').read().split('\n') #open for read only so we don't overwrite anything by accident
 	greenData = list(filter(None, greenData)) # Remove any empty lines
@@ -36,8 +41,24 @@ def main():
 	greenAvgData =  averageSideData(greenData, SampleNum)
 	sinteredAvgData = averageSideData(sinterData, SampleNum)
 
+	print("-\n")
 	angles = findAngleBetweenSides(greenAvgData, sinteredAvgData)
 	print(angles)
+
+	print("Average Twist (rad): %f" %((angles[0] + angles[1] + angles[2] + angles[3])/4))
+	print("\n")
+
+	AGAIN = input("Calculate another sample? [y/n]: ")
+	print("\n")
+
+	if AGAIN == "y": 
+		SAMEDATA = input("Use same data? [y/n] ")
+		if SAMEDATA == 'y': 
+			main(greenFileLoc, sinterFileLoc)
+		else: 
+			main()
+	elif AGAIN == "n": 
+		return
 
 def averageSideData(datalist, sample):
 
@@ -85,6 +106,8 @@ def averageSideData(datalist, sample):
 def findAngleBetweenSides(greenAvgData, sinteredAvgData):
 	angle1 = acos(dot(greenAvgData[0], sinteredAvgData[0])/(mag(greenAvgData[0])*mag(sinteredAvgData[0])))
 	angle2 = acos(dot(greenAvgData[1], sinteredAvgData[1])/(mag(greenAvgData[1])*mag(sinteredAvgData[1])))
+	# inside3 = dot(greenAvgData[2], sinteredAvgData[2])/(mag(greenAvgData[2])*mag(sinteredAvgData[2]))
+	# print(inside3)
 	angle3 = acos(dot(greenAvgData[2], sinteredAvgData[2])/(mag(greenAvgData[2])*mag(sinteredAvgData[2])))
 	angle4 = acos(dot(greenAvgData[3], sinteredAvgData[3])/(mag(greenAvgData[3])*mag(sinteredAvgData[3])))
 
@@ -98,4 +121,4 @@ def mag(vect):
 
 if __name__ == '__main__':
 	main()
-	
+	exitinput = input("")
