@@ -30,6 +30,7 @@ def main(greenFileLoc = None, sinterFileLoc = None):
 	
 	print('\n')
 	SampleNum = getSampleNumber() # This returns an INT
+	#TODO: Add option for testing all samples in the file. Might run into an issue if some samples don't have sintered results yet. 
 
 
 	greenData = open(greenFileLoc.strip('"'), 'r').read().split('\n') #open for read only so we don't overwrite anything by accident
@@ -47,6 +48,8 @@ def main(greenFileLoc = None, sinterFileLoc = None):
 
 	print("Average Twist (rad): %f" %((angles[0] + angles[1] + angles[2] + angles[3])/4))
 	print("\n")
+
+	#TODO: Should probably output all data into a file at somepoint instead of having to manually copy down values. 
 
 	AGAIN = input("Calculate another sample? [y/n]: ")
 	print("\n")
