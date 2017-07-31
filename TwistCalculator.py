@@ -49,6 +49,15 @@ def main(greenFileLoc = None, sinterFileLoc = None):
 	print("Average Twist (rad): %f" %((angles[0] + angles[1] + angles[2] + angles[3])/4))
 	print("\n")
 
+	twistDirection = findTwistDirection(greenAvgData, sinteredAvgData)
+	if twistDirection == 1: 
+		print('CCW')
+	elif twistDirection == 0: 
+		print('CW')
+	elif twistDirection == None:
+		print('Error in twist direction')
+	print('\n')
+
 	#TODO: Should probably output all data into a file at somepoint instead of having to manually copy down values. 
 
 	AGAIN = input("Calculate another sample? [y/n]: ")
@@ -116,6 +125,24 @@ def findAngleBetweenSides(greenAvgData, sinteredAvgData):
 	angle4 = acos(dot(greenAvgData[3], sinteredAvgData[3])/(mag(greenAvgData[3])*mag(sinteredAvgData[3])))
 
 	return [angle1, angle2, angle3, angle4]
+
+def findTwistDirection(greenAvgData, sinteredAvgData):
+	# Find z component of the cross product of {greenSide1 x sinteredSide1}. 
+	# Positive = CCW Twist -- 1
+	# Negavtive = CW Twist -- 0
+
+	print(greenAvgData)
+
+	greenSide1 = greenAvgData[0]
+	sinteredSide1 = sinteredAvgData[0]
+
+	direction = greenSide1[1]*sinteredSide1[2] - greenSide1[2]*sinteredSide1[1]
+
+	if direction > 0: 
+		return 1
+	elif direction < 0: 
+		return 0
+
 
 def dot(vect1, vect2): 
 	# Just a function to find the dot product between two vectors
