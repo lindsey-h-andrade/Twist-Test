@@ -50,6 +50,7 @@ def main(greenFileLoc = None, sinterFileLoc = None):
 	print("\n")
 
 	twistDirection = findTwistDirection(greenAvgData, sinteredAvgData)
+	print(twistDirection)
 	if twistDirection == 1: 
 		print('CCW')
 	elif twistDirection == 0: 
@@ -131,12 +132,17 @@ def findTwistDirection(greenAvgData, sinteredAvgData):
 	# Positive = CCW Twist -- 1
 	# Negavtive = CW Twist -- 0
 
-	print(greenAvgData)
-
 	greenSide1 = greenAvgData[0]
 	sinteredSide1 = sinteredAvgData[0]
 
-	direction = greenSide1[1]*sinteredSide1[2] - greenSide1[2]*sinteredSide1[1]
+	print('-----')
+	print(greenSide1)
+	print(sinteredSide1)
+	print('-----')
+
+	direction = (greenSide1[0]*sinteredSide1[1]) - (greenSide1[1]*sinteredSide1[0])
+
+	print(direction)
 
 	if direction > 0: 
 		return 1
