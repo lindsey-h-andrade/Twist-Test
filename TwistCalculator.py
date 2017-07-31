@@ -50,7 +50,6 @@ def main(greenFileLoc = None, sinterFileLoc = None):
 	print("\n")
 
 	twistDirection = findTwistDirection(greenAvgData, sinteredAvgData)
-	print(twistDirection)
 	if twistDirection == 1: 
 		print('CCW')
 	elif twistDirection == 0: 
@@ -64,9 +63,9 @@ def main(greenFileLoc = None, sinterFileLoc = None):
 	AGAIN = input("Calculate another sample? [y/n]: ")
 	print("\n")
 
-	if AGAIN == "y": 
+	if AGAIN == "y" or AGAIN == "": 
 		SAMEDATA = input("Use same data? [y/n] ")
-		if SAMEDATA == 'y': 
+		if SAMEDATA == 'y' or SAMEDATA == "": 
 			main(greenFileLoc, sinterFileLoc)
 		else: 
 			main()
@@ -135,14 +134,9 @@ def findTwistDirection(greenAvgData, sinteredAvgData):
 	greenSide1 = greenAvgData[0]
 	sinteredSide1 = sinteredAvgData[0]
 
-	print('-----')
-	print(greenSide1)
-	print(sinteredSide1)
-	print('-----')
 
 	direction = (greenSide1[0]*sinteredSide1[1]) - (greenSide1[1]*sinteredSide1[0])
 
-	print(direction)
 
 	if direction > 0: 
 		return 1
